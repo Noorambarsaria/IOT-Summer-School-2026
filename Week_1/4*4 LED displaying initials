@@ -1,0 +1,95 @@
+const int rowPins[4] = {2,3,4,5};
+const int colPins[4] = {6,7,8,9};
+
+// Letters
+
+byte S[4][4]={
+ {1,1,1,1},
+ {1,0,0,0},
+ {0,1,1,1},
+ {1,1,1,1}
+};
+
+byte D[4][4]={
+ {1,1,1,0},
+ {1,0,0,1},
+ {1,0,0,1},
+ {1,1,1,0}
+};
+
+byte N[4][4]={
+ {1,0,0,1},
+ {1,1,0,1},
+ {1,0,1,1},
+ {1,0,0,1}
+};
+
+byte L[4][4]={
+ {1,0,0,0},
+ {1,0,0,0},
+ {1,0,0,0},
+ {1,1,1,1}
+};
+
+byte J[4][4]={
+ {1,1,1,1},
+ {0,0,1,0},
+ {1,0,1,0},
+ {1,1,0,0}
+};
+
+void setup()
+{
+  for(int i=0;i<4;i++)
+  {
+    pinMode(rowPins[i],OUTPUT);
+    pinMode(colPins[i],OUTPUT);
+  }
+}
+
+void display(byte letter[4][4])
+{
+  for(int k=0;k<150;k++)      // Refresh
+  {
+    for(int r=0;r<4;r++)
+    {
+      // Turn all rows OFF
+      for(int i=0;i<4;i++)
+        digitalWrite(rowPins[i],LOW);
+
+      // Turn all columns OFF
+      for(int i=0;i<4;i++)
+        digitalWrite(colPins[i],HIGH);
+
+      // Select current row
+      digitalWrite(rowPins[r],HIGH);
+
+      // LEDs in this row
+      for(int c=0;c<4;c++)
+      {
+        if(letter[r][c])
+          digitalWrite(colPins[c],LOW);
+      }
+
+      delay(2);
+    }
+  }
+}
+
+void loop()
+{
+  display(S);
+  delay(500);
+
+  display(D);
+  delay(500);
+
+  display(N);
+  delay(500);
+
+  display(L);
+  delay(500);
+
+  display(J);
+  delay(500);
+}
